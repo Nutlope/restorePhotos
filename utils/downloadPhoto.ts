@@ -5,6 +5,7 @@ function forceDownload(blobUrl: string, filename: string) {
   document.body.appendChild(a);
   a.click();
   a.remove();
+  console.log("hhh")
 }
 
 export default function downloadPhoto(url: string, filename: string) {
