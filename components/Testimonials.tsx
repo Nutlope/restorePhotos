@@ -81,7 +81,7 @@ export function Testimonials() {
           <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 dark:text-zinc-200 sm:text-6xl">
             Loved by many worldwide.
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-lg text-slate-700 leading-7">
+          <p className="mx-auto mt-6 max-w-xl text-lg text-slate-700 leading-7 dark:text-zinc-400">
             See what our 40,000+ users are saying about the product.
           </p>
         </div>
