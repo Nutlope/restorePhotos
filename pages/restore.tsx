@@ -27,12 +27,12 @@ const options = {
   mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
   editor: { images: { crop: false } },
   styles: { colors: { primary: "#000" } },
-  onValidate: async (file: any): Promise<undefined | string> => {
+  onValidate: async (file: File): Promise<undefined | string> => {
     let isSafe = false;
     try {
       isSafe = await NSFWPredictor.isSafeImg(file);
     } catch (error) {
-      console.log("NSFW predictor threw an error");
+      console.error("NSFW predictor threw an error", error);
     }
     return isSafe ? undefined : "Detected a NSFW image";
   },
