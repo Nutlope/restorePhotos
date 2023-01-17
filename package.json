@@ -7,19 +7,21 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
+    "@tensorflow/tfjs": "^4.2.0",
     "@upstash/ratelimit": "^0.1.5",
     "@upstash/redis": "^1.19.1",
     "@vercel/analytics": "^0.1.6",
     "framer-motion": "^8.2.4",
     "next": "latest",
+    "nsfwjs": "^2.4.2",
     "react": "18.2.0",
     "react-compare-slider": "^2.2.0",
     "react-countup": "^6.4.0",
     "react-dom": "18.2.0",
-    "react-uploader": "^3.0.2",
+    "react-uploader": "^3.1.0",
     "react-use-measure": "^2.1.1",
     "request-ip": "^3.3.0",
-    "uploader": "^3.0.2"
+    "uploader": "^3.1.0"
   },
   "devDependencies": {
     "@types/node": "18.11.3",

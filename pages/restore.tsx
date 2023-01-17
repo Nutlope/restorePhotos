@@ -14,6 +14,7 @@ import ResizablePanel from "../components/ResizablePanel";
 import Toggle from "../components/Toggle";
 import appendNewToName from "../utils/appendNewToName";
 import downloadPhoto from "../utils/downloadPhoto";
+import NSFWPredictor from "../utils/nsfwCheck";
 
 // Configuration for the uploader
 const uploader = Uploader({
@@ -26,6 +27,15 @@ const options = {
   mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
   editor: { images: { crop: false } },
   styles: { colors: { primary: "#000" } },
+  onValidate: async (file: any): Promise<undefined | string> => {
+    let isSafe = false;
+    try {
+      isSafe = await NSFWPredictor.isSafeImg(file);
+    } catch (error) {
+      console.log("NSFW predictor threw an error");
+    }
+    return isSafe ? undefined : "Detected a NSFW image";
+  },
 };
 
 const Home: NextPage = () => {
