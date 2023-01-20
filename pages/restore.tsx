@@ -14,6 +14,7 @@ import ResizablePanel from "../components/ResizablePanel";
 import Toggle from "../components/Toggle";
 import appendNewToName from "../utils/appendNewToName";
 import downloadPhoto from "../utils/downloadPhoto";
+import FAQ from "../components/FAQ";
 
 // Configuration for the uploader
 const uploader = Uploader({
@@ -201,6 +202,7 @@ const Home: NextPage = () => {
           </AnimatePresence>
         </ResizablePanel>
       </main>
+      <FAQ />
       <Footer />
     </div>
   );
