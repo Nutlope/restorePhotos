@@ -18,6 +18,7 @@
     "react-dom": "18.2.0",
     "react-uploader": "^3.3.0",
     "react-use-measure": "^2.1.1",
+    "react-wrap-balancer": "^0.4.0",
     "request-ip": "^3.3.0",
     "uploader": "^3.3.0"
   },

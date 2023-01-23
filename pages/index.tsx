@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import SquigglyLines from "../components/SquigglyLines";
 import { Testimonials } from "../components/Testimonials";
+import Balancer from "react-wrap-balancer";
 
 const Home: NextPage = () => {
   return (
@@ -26,17 +27,21 @@ const Home: NextPage = () => {
           customers
         </a>
         <h1 className="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-slate-900 sm:text-7xl">
-          Restoring old photos{" "}
-          <span className="relative whitespace-nowrap text-[#3290EE]">
-            <SquigglyLines />
-            <span className="relative">using AI</span>
-          </span>{" "}
-          for everyone.
+          <Balancer>
+            Restoring old photos{" "}
+            <span className="relative whitespace-nowrap text-[#3290EE]">
+              <SquigglyLines />
+              <span className="relative">using AI</span>
+            </span>{" "}
+            for everyone.
+          </Balancer>
         </h1>
 
         <p className="mx-auto mt-12 max-w-xl text-lg text-slate-700 leading-7">
-          Have old and blurry face photos? Let our AI restore them so those
-          memories can live on. 100% free – restore your photos today.
+          <Balancer>
+            Have old and blurry face photos? Let our AI restore them so those
+            memories can live on. 100% free – restore your photos today.
+          </Balancer>
         </p>
         <Link
           className="bg-black rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-black/80"
