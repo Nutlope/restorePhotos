@@ -22,12 +22,12 @@ const ratelimit = redis
     })
   : undefined;
 
-const endpointResponse = (restoredImage: string | null, endpointSuccess: EndPointSuccess) => {
+function endpointResponse<ResponseType>(restoredImage: string | null , endpointSuccess: EndPointSuccess) {
   const {pass, fail} = endpointSuccess;
   if (restoredImage) {
-    return pass;
+    return pass as ResponseType;
   }
-  return fail;
+  return fail as ResponseType;
 }
 
 export default async function handler(
@@ -91,8 +91,8 @@ export default async function handler(
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
-  const status = endpointResponse(restoredImage, {pass: 200, fail: 500})
-  const json = endpointResponse(restoredImage, {pass: restoredImage, fail: "Failed to restore image"})
+  const status = endpointResponse<number>(restoredImage, {pass: 200, fail: 500});
+  const json = endpointResponse<string>(restoredImage, {pass: restoredImage, fail: "Failed to restore image"});
   res
     .status(status)
     .json(json);
