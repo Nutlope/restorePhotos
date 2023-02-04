@@ -84,7 +84,7 @@ export function Testimonials() {
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg text-slate-700 leading-7">
             <Balancer>
-              See what our 55,000+ users are saying about the product.
+              See what our 100,000+ users are saying about the product.
             </Balancer>
           </p>
         </div>
