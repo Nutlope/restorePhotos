@@ -16,37 +16,19 @@ export default function Header() {
           restorePhotos.io
         </h1>
       </Link>
-      <div className="flex justify-between sm:w-32 sm:h-[34px] w-20 h-[28px]">
-        <a
-          className="cursor-pointer"
-          onClick={() => {
-            const html = document.querySelector("html");
-            html?.classList.toggle("dark");
-            localStorage.setItem("dark", "true");
-          }}
-        >
-          <Image
-            alt="Dark mode toggle"
-            src="/lightbulb-regular.svg"
-            className="sm:w-10 sm:h-[34px] w-8 h-[28px] dark:invert"
-            width={32}
-            height={28}
-          />
-        </a>
-        <a
-          href="https://vercel.com/templates/next.js/ai-photo-restorer"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Image
-            alt="Vercel Icon"
-            src="/vercelLogo.png"
-            className="sm:w-10 sm:h-[34px] w-8 h-[28px] dark:invert"
-            width={32}
-            height={28}
-          />
-        </a>
-      </div>
+      <a
+        href="https://vercel.com/templates/next.js/ai-photo-restorer"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <Image
+          alt="Vercel Icon"
+          src="/vercelLogo.png"
+          className="sm:w-10 sm:h-[34px] w-8 h-[28px] dark:invert"
+          width={32}
+          height={28}
+        />
+      </a>
     </header>
   );
 }
