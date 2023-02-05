@@ -30,7 +30,11 @@ export default function Footer() {
           onClick={() => {
             const html = document.querySelector("html");
             html?.classList.toggle("dark");
-            localStorage.setItem("dark", "true");
+            if (localStorage.getItem("dark") === "true") {
+              localStorage.setItem("dark", "false");
+            } else {
+              localStorage.setItem("dark", "true");
+            }
           }}
         >
           <svg
