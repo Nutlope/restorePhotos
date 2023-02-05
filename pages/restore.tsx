@@ -106,7 +106,7 @@ const Home: NextPage = () => {
         </h1>
         <p className="text-slate-500 dark:text-zinc-300">
           {" "}
-          {/* Obtained this number from Vercel: based on how many serverless invocations happened. Can automate later */}
+          {/* Obtained this number from Vercel: based on how many serverless invocations happened. */}
           <CountUp start={50000} end={174851} duration={2} separator="," />{" "}
           photos generated and counting.
         </p>
