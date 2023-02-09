@@ -14,6 +14,7 @@ import ResizablePanel from "../components/ResizablePanel";
 import Toggle from "../components/Toggle";
 import appendNewToName from "../utils/appendNewToName";
 import downloadPhoto from "../utils/downloadPhoto";
+import Balancer from "react-wrap-balancer";
 
 // Configuration for the uploader
 const uploader = Uploader({
@@ -92,7 +93,7 @@ const Home: NextPage = () => {
           <span className="font-bold">YouTube tutorial</span>.
         </a>
         <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl mb-5">
-          Restore any face photo
+          <Balancer>Restore any face photo</Balancer>
         </h1>
         <p className="text-slate-500">
           {" "}

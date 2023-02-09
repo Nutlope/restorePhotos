@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Balancer from "react-wrap-balancer";
 
 const testimonials = [
   [
@@ -79,10 +80,12 @@ export function Testimonials() {
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto md:text-center">
           <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl">
-            Loved by many worldwide.
+            <Balancer>Loved by many worldwide.</Balancer>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg text-slate-700 leading-7">
-            See what our 100,000+ users are saying about the product.
+            <Balancer>
+              See what our 100,000+ users are saying about the product.
+            </Balancer>
           </p>
         </div>
         <ul
@@ -101,7 +104,7 @@ export function Testimonials() {
                       <figure className="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
                         <blockquote className="relative">
                           <p className="text-lg tracking-tight text-slate-900">
-                            "{testimonial.content}"
+                            <Balancer>"{testimonial.content}"</Balancer>
                           </p>
                         </blockquote>
                         <figcaption className="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
