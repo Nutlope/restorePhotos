@@ -78,10 +78,10 @@ export function Testimonials() {
     >
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto md:text-center">
-          <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl">
+          <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 dark:text-zinc-200 sm:text-6xl">
             Loved by many worldwide.
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-lg text-slate-700 leading-7">
+          <p className="mx-auto mt-6 max-w-xl text-lg text-slate-700 leading-7 dark:text-zinc-400">
             See what our 100,000+ users are saying about the product.
           </p>
         </div>
@@ -98,18 +98,18 @@ export function Testimonials() {
                     className="hover:scale-105 transition duration-300 ease-in-out"
                   >
                     <a href={testimonial.link} target="_blank" rel="noreferrer">
-                      <figure className="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
+                      <figure className="relative rounded-2xl bg-white dark:bg-zinc-800 p-6 shadow-xl shadow-zinc-900/10 dark:shadow-black/10">
                         <blockquote className="relative">
-                          <p className="text-lg tracking-tight text-slate-900">
+                          <p className="text-lg tracking-tight text-slate-900 dark:text-slate-100">
                             "{testimonial.content}"
                           </p>
                         </blockquote>
-                        <figcaption className="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
+                        <figcaption className="relative mt-6 flex items-center justify-between border-t border-slate-100 dark:border-zinc-100/10 pt-6">
                           <div>
-                            <div className="font-display text-base text-slate-900">
+                            <div className="font-display text-base text-slate-900 dark:text-zinc-100">
                               {testimonial.author.name}
                             </div>
-                            <div className="mt-1 text-sm text-slate-500">
+                            <div className="mt-1 text-sm text-slate-500 dark:text-zinc-300">
                               {testimonial.author.role}
                             </div>
                           </div>

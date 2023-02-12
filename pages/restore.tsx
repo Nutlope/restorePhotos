@@ -25,10 +25,20 @@ const options = {
   maxFileCount: 1,
   mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
   editor: { images: { crop: false } },
-  styles: { colors: { primary: "#000" } },
+  styles: {
+    colors: {
+      primary: "#000",
+    },
+  },
 };
 
 const Home: NextPage = () => {
+  if (typeof window === "object" && localStorage.getItem("dark") === "true") {
+    window.document.querySelector("html")?.classList.add("dark");
+  } else if (typeof window === "object") {
+    window.document.querySelector("html")?.classList.remove("dark");
+  }
+
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
   const [restoredImage, setRestoredImage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -86,22 +96,22 @@ const Home: NextPage = () => {
           href="https://youtu.be/FRQtFDDrUXQ"
           target="_blank"
           rel="noreferrer"
-          className="border rounded-2xl py-1 px-4 text-slate-500 text-sm mb-5 hover:scale-105 transition duration-300 ease-in-out"
+          className="border rounded-2xl py-1 px-4 text-slate-500 dark:text-zinc-300 text-sm mb-5 hover:scale-105 transition duration-300 ease-in-out"
         >
           Are you a developer and want to learn how I built this? Watch the{" "}
           <span className="font-bold">YouTube tutorial</span>.
         </a>
-        <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl mb-5">
+        <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 dark:text-zinc-100 sm:text-6xl mb-5">
           Restore any face photo
         </h1>
-        <p className="text-slate-500">
+        <p className="text-slate-500 dark:text-zinc-300">
           {" "}
           {/* Obtained this number from Vercel: based on how many serverless invocations happened. */}
           <CountUp start={50000} end={174851} duration={2} separator="," />{" "}
           photos generated and counting.
         </p>
         <ResizablePanel>
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode="wait">
             <motion.div className="flex justify-between items-center w-full flex-col mt-4">
               <Toggle
                 className={`${restoredLoaded ? "visible" : "invisible"} mb-6`}
@@ -127,7 +137,9 @@ const Home: NextPage = () => {
               {restoredImage && originalPhoto && !sideBySide && (
                 <div className="flex sm:space-x-4 sm:flex-row flex-col">
                   <div>
-                    <h2 className="mb-1 font-medium text-lg">Original Photo</h2>
+                    <h2 className="mb-1 font-medium text-lg text-black dark:text-zinc-100">
+                      Original Photo
+                    </h2>
                     <Image
                       alt="original photo"
                       src={originalPhoto}
@@ -137,7 +149,9 @@ const Home: NextPage = () => {
                     />
                   </div>
                   <div className="sm:mt-0 mt-8">
-                    <h2 className="mb-1 font-medium text-lg">Restored Photo</h2>
+                    <h2 className="mb-1 font-medium text-lg text-black dark:text-zinc-100">
+                      Restored Photo
+                    </h2>
                     <a href={restoredImage} target="_blank" rel="noreferrer">
                       <Image
                         alt="restored photo"
@@ -154,16 +168,25 @@ const Home: NextPage = () => {
               {loading && (
                 <button
                   disabled
-                  className="bg-black rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 hover:bg-black/80 w-40"
+                  className="bg-black dark:bg-zinc-700 rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 hover:bg-black/80 dark:hover:bg-zinc-700/80 w-40"
                 >
                   <span className="pt-4">
-                    <LoadingDots color="white" style="large" />
+                    <LoadingDots
+                      color={
+                        document
+                          .querySelector("html")
+                          ?.classList.contains("dark")
+                          ? "black"
+                          : "white"
+                      }
+                      style="large"
+                    />
                   </span>
                 </button>
               )}
               {error && (
                 <div
-                  className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mt-8"
+                  className="bg-red-100 dark:bg-zinc-800 border border-red-400 dark:border-red-900 text-red-700 dark:text-red-200 px-4 py-3 rounded-xl mt-8"
                   role="alert"
                 >
                   <span className="block sm:inline">{error}</span>
@@ -178,7 +201,7 @@ const Home: NextPage = () => {
                       setRestoredLoaded(false);
                       setError(null);
                     }}
-                    className="bg-black rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-black/80 transition"
+                    className="bg-black dark:bg-zinc-700 rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-black/80 dark:hover:bg-zinc-700/80 transition"
                   >
                     Upload New Photo
                   </button>
@@ -191,7 +214,7 @@ const Home: NextPage = () => {
                         appendNewToName(photoName!)
                       );
                     }}
-                    className="bg-white rounded-full text-black border font-medium px-4 py-2 mt-8 hover:bg-gray-100 transition"
+                    className="bg-white dark:bg-zinc-300 rounded-full text-black dark:text-zinc-900 border border-white dark:border-zinc-300 font-medium px-4 py-2 mt-8 hover:bg-gray-100 dark:hover:bg-zinc-400 transition"
                   >
                     Download Restored Photo
                   </button>

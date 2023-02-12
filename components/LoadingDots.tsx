@@ -1,7 +1,9 @@
 import styles from "../styles/loading-dots.module.css";
 
 const LoadingDots = ({
-  color = "#000",
+  color = document.querySelector("html")?.classList.contains("dark")
+    ? "#ddf"
+    : "#000",
   style = "small",
 }: {
   color: string;

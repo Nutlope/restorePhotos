@@ -12,7 +12,7 @@ export default function Header() {
           width={36}
           height={36}
         />
-        <h1 className="sm:text-5xl text-3xl font-bold ml-2 tracking-tight">
+        <h1 className="sm:text-5xl text-3xl font-bold ml-2 text-black dark:text-white tracking-tight">
           restorePhotos.io
         </h1>
       </Link>
@@ -24,7 +24,7 @@ export default function Header() {
         <Image
           alt="Vercel Icon"
           src="/vercelLogo.png"
-          className="sm:w-10 sm:h-[34px] w-8 h-[28px]"
+          className="sm:w-10 sm:h-[34px] w-8 h-[28px] dark:invert"
           width={32}
           height={28}
         />
