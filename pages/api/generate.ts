@@ -10,6 +10,10 @@ interface ExtendedNextApiRequest extends NextApiRequest {
   };
 }
 
+interface EndPointSuccess {
+  pass: string | number | null;
+  fail: string | number | null;
+}
 // Create a new ratelimiter, that allows 3 requests per 60 seconds
 const ratelimit = redis
   ? new Ratelimit({
@@ -17,6 +21,14 @@ const ratelimit = redis
       limiter: Ratelimit.fixedWindow(3, "60 s"),
     })
   : undefined;
+
+function endpointResponse<ResponseType>(restoredImage: string | null , endpointSuccess: EndPointSuccess) {
+  const {pass, fail} = endpointSuccess;
+  if (restoredImage) {
+    return pass as ResponseType;
+  }
+  return fail as ResponseType;
+}
 
 export default async function handler(
   req: ExtendedNextApiRequest,
@@ -79,7 +91,9 @@ export default async function handler(
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
+  const status = endpointResponse<number>(restoredImage, {pass: 200, fail: 500});
+  const json = endpointResponse<string>(restoredImage, {pass: restoredImage, fail: "Failed to restore image"});
   res
-    .status(200)
-    .json(restoredImage ? restoredImage : "Failed to restore image");
+    .status(status)
+    .json(json);
 }
