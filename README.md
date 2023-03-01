@@ -22,11 +22,9 @@ git clone
 2. Click on your profile picture in the top right corner, and click on "Dashboard".
 3. Click on "Account" in the navbar. And, here you can find your API token, copy it.
 
-
 ### Storing API key in .env file.
 
 Create a file in root directory of project with env. And store your API key in it, as shown in the .example.env file.
-
 
 If you'd also like to do rate limiting, create an account on UpStash, create a Redis database, and populate the two environment variables in `.env` as well. If you don't want to do rate limiting, you don't need to make any changes.
 
@@ -49,3 +47,11 @@ npm run dev
 Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Nutlope/restorePhotos&env=REPLICATE_API_KEY&project-name=face-photo-restorer&repo-name=restore-photos)
+
+## Powered by
+
+This example is powered by the following 3 services:
+
+- [Replicate](https://replicate.com) (AI API)
+- [Upload](https://upload.io) (storage)
+- [Vercel](https://vercel.com) (hosting, serverless functions, analytics)
