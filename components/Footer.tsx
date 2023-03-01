@@ -9,7 +9,7 @@ export default function Footer() {
           href="https://replicate.com/"
           target="_blank"
           rel="noreferrer"
-          className="font-bold hover:underline transition hover:text-gray-300 underline-offset-2"
+          className="font-bold transition hover:text-black/50"
         >
           Replicate,{" "}
         </a>
@@ -17,7 +17,7 @@ export default function Footer() {
           href="https://upload.io"
           target="_blank"
           rel="noreferrer"
-          className="font-bold hover:underline hover:text-gray-300 transition underline-offset-2"
+          className="font-bold transition hover:text-black/50"
         >
           Upload,{" "}
         </a>
@@ -26,7 +26,7 @@ export default function Footer() {
           href="https://vercel.com/"
           target="_blank"
           rel="noreferrer"
-          className="font-bold hover:underline transition hover:text-gray-300 underline-offset-2"
+          className="font-bold transition hover:text-black/50"
         >
           Vercel.
         </a>
