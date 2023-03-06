@@ -1,3 +1,12 @@
+## Todos
+
+- [ ] Add env vars to Vercel
+- [ ] Add profile picture + name to header
+- [ ] Add "5 image image restorations left" maybe with countdown?
+- [ ] Add postgres db with prisma hosted on Neon
+  - [ ] Could also add the number of total restored photos
+- [ ] Add logsnag for notifications
+
 # [RestorePhotos.io](https://restorephotos.io/)
 
 This project restores old face photos using AI. Watch the [4 minute explainer video](https://twitter.com/nutlope/status/1614794731396931585) to see how I built this or see the [15 second demo](https://twitter.com/nutlope/status/1612488923716136962).
