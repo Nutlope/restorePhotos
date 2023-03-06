@@ -2,6 +2,8 @@ import { Ratelimit } from "@upstash/ratelimit";
 import type { NextApiRequest, NextApiResponse } from "next";
 import requestIp from "request-ip";
 import redis from "../../utils/redis";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]";
 
 type Data = string;
 interface ExtendedNextApiRequest extends NextApiRequest {
@@ -23,6 +25,12 @@ export default async function handler(
   req: ExtendedNextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  // Check if user is logged in
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) {
+    return res.status(500).json("Login to upload.");
+  }
+
   // Rate Limiter Code
   if (ratelimit) {
     const identifier = requestIp.getClientIp(req);
@@ -31,10 +39,9 @@ export default async function handler(
     res.setHeader("X-RateLimit-Remaining", result.remaining);
 
     if (!result.success) {
-      res
+      return res
         .status(429)
         .json("Too many uploads in 1 day. Please try again after 24 hours.");
-      return;
     }
   }
 

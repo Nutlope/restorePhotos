@@ -16,7 +16,7 @@ import appendNewToName from "../utils/appendNewToName";
 import downloadPhoto from "../utils/downloadPhoto";
 import NSFWPredictor from "../utils/nsfwCheck";
 import va from "@vercel/analytics";
-
+import { useSession, signIn, signOut } from "next-auth/react";
 // Configuration for the uploader
 const uploader = Uploader({
   apiKey: !!process.env.NEXT_PUBLIC_UPLOAD_API_KEY
@@ -87,6 +87,8 @@ const Home: NextPage = () => {
     setLoading(false);
   }
 
+  const { data: session, status } = useSession();
+
   return (
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Head>
@@ -128,7 +130,19 @@ const Home: NextPage = () => {
                   restored={restoredImage!}
                 />
               )}
-              {!originalPhoto && <UploadDropZone />}
+              {!originalPhoto && status === "authenticated" && (
+                <UploadDropZone />
+              )}
+              {!originalPhoto && status !== "authenticated" && (
+                <div>
+                  <button
+                    onClick={() => signIn("google")}
+                    className="bg-slate-500 text-white font-bold py-2 px-4 rounded-2xl"
+                  >
+                    Sign in with Google to upload photos
+                  </button>
+                </div>
+              )}
               {originalPhoto && !restoredImage && (
                 <Image
                   alt="original photo"
