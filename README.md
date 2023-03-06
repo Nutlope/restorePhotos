@@ -3,8 +3,8 @@
 - [ ] Add env vars to Vercel
 - [ ] Add profile picture + name to header
 - [ ] Add "5 image image restorations left" maybe with countdown?
-- [ ] Add postgres db with prisma hosted on Neon
-  - [ ] Could also add the number of total restored photos
+- [ ] Add postgres db with prisma hosted on PlanetScale
+  - [ ] Could also add the number of total restored photos eventually
 - [ ] Add logsnag for notifications
 
 # [RestorePhotos.io](https://restorephotos.io/)
