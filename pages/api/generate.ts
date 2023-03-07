@@ -27,21 +27,30 @@ export default async function handler(
 ) {
   // Check if user is logged in
   const session = await getServerSession(req, res, authOptions);
-  if (!session) {
+  if (!session || !session.user) {
     return res.status(500).json("Login to upload.");
   }
 
-  // Rate Limiter Code
+  // Rate Limiter Code by email
   if (ratelimit) {
-    const identifier = requestIp.getClientIp(req);
+    const identifier = session.user.email;
     const result = await ratelimit.limit(identifier!);
     res.setHeader("X-RateLimit-Limit", result.limit);
     res.setHeader("X-RateLimit-Remaining", result.remaining);
 
+    // Calcualte the remaining time
+    const diff = Math.abs(
+      new Date(result.reset).getTime() - new Date().getTime()
+    );
+    const hours = Math.floor(diff / 1000 / 60 / 60);
+    const minutes = Math.floor(diff / 1000 / 60) - hours * 60;
+
     if (!result.success) {
       return res
         .status(429)
-        .json("Too many uploads in 1 day. Please try again after 24 hours.");
+        .json(
+          `Too many uploads in 1 day. Your generations will renew in ${hours} hours and ${minutes} minutes.`
+        );
     }
   }
 

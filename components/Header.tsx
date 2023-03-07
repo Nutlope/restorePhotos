@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Header() {
+export default function Header({ photo }: { photo: string | undefined }) {
   return (
     <header className="flex justify-between items-center w-full mt-5 border-b-2 pb-7 sm:px-4 px-2">
       <Link href="/" className="flex space-x-2">
@@ -16,6 +16,7 @@ export default function Header() {
           restorePhotos.io
         </h1>
       </Link>
+      {/* TODO: Display the photo here */}
       <a
         href="https://vercel.com/templates/next.js/ai-photo-restorer"
         target="_blank"

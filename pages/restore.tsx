@@ -17,12 +17,14 @@ import downloadPhoto from "../utils/downloadPhoto";
 import NSFWPredictor from "../utils/nsfwCheck";
 import va from "@vercel/analytics";
 import { useSession, signIn, signOut } from "next-auth/react";
+
 // Configuration for the uploader
 const uploader = Uploader({
   apiKey: !!process.env.NEXT_PUBLIC_UPLOAD_API_KEY
     ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
     : "free",
 });
+
 const options = {
   maxFileCount: 1,
   mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
@@ -96,7 +98,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
+      <Header photo={session?.user?.image || null} />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8">
         <a
           href="https://youtu.be/FRQtFDDrUXQ"
@@ -130,18 +132,21 @@ const Home: NextPage = () => {
                   restored={restoredImage!}
                 />
               )}
-              {!originalPhoto && status === "authenticated" && (
+              {status === "loading" ? (
+                <div className="h-[250px]">loading...</div>
+              ) : status === "authenticated" && !originalPhoto ? (
                 <UploadDropZone />
-              )}
-              {!originalPhoto && status !== "authenticated" && (
-                <div>
-                  <button
-                    onClick={() => signIn("google")}
-                    className="bg-slate-500 text-white font-bold py-2 px-4 rounded-2xl"
-                  >
-                    Sign in with Google to upload photos
-                  </button>
-                </div>
+              ) : (
+                !originalPhoto && (
+                  <div className="h-[250px]">
+                    <button
+                      onClick={() => signIn("google")}
+                      className="bg-slate-500 text-white font-bold py-2 px-4 rounded-2xl"
+                    >
+                      Sign in with Google to upload photos
+                    </button>
+                  </div>
+                )
               )}
               {originalPhoto && !restoredImage && (
                 <Image

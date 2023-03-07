@@ -1,11 +1,9 @@
 ## Todos
 
+- [ ] Add profile picture
+- [ ] Add "5 image image restorations left" with countdown, do it in separate edge function
 - [ ] Add env vars to Vercel
-- [ ] Add profile picture + name to header
-- [ ] Add "5 image image restorations left" maybe with countdown?
-- [x] Add postgres db with prisma hosted on Neon
-- [ ] Could also add the number of total restored photos eventually
-- [ ] Add logsnag for notifications
+- [ ] Add logsnag for notifications [MAYBE]
 
 # [RestorePhotos.io](https://restorephotos.io/)
 
