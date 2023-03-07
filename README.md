@@ -1,9 +1,8 @@
 ## Todos
 
-- [ ] Add profile picture
 - [ ] Add "5 image image restorations left" with countdown, do it in separate edge function
-- [ ] Add env vars to Vercel
-- [ ] Add logsnag for notifications [MAYBE]
+- [ ] Add logsnag for notifications
+- [ ] Add signout to the profile picture
 
 # [RestorePhotos.io](https://restorephotos.io/)
 

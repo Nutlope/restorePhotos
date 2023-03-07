@@ -8,28 +8,37 @@ export default function Header({ photo }: { photo: string | undefined }) {
         <Image
           alt="header text"
           src="/imageIcon.png"
-          className="sm:w-14 sm:h-14 w-9 h-9"
-          width={36}
-          height={36}
+          className="sm:w-12 sm:h-12 w-7 h-7"
+          width={25}
+          height={25}
         />
-        <h1 className="sm:text-5xl text-3xl font-bold ml-2 tracking-tight">
+        <h1 className="sm:text-4xl text-2xl font-bold ml-2 tracking-tight">
           restorePhotos.io
         </h1>
       </Link>
-      {/* TODO: Display the photo here */}
-      <a
-        href="https://vercel.com/templates/next.js/ai-photo-restorer"
-        target="_blank"
-        rel="noreferrer"
-      >
+      {photo ? (
         <Image
-          alt="Vercel Icon"
-          src="/vercelLogo.png"
-          className="sm:w-10 sm:h-[34px] w-8 h-[28px]"
+          alt="Profile picture"
+          src={photo}
+          className="w-10 rounded-full"
           width={32}
           height={28}
         />
-      </a>
+      ) : (
+        <a
+          href="https://vercel.com/templates/next.js/ai-photo-restorer"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Image
+            alt="Vercel Icon"
+            src="/vercelLogo.png"
+            className="sm:w-10 sm:h-[34px] w-8 h-[28px]"
+            width={32}
+            height={28}
+          />
+        </a>
+      )}
     </header>
   );
 }
