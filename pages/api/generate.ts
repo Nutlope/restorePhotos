@@ -1,7 +1,8 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import type { NextApiRequest, NextApiResponse } from "next";
-import requestIp from "request-ip";
 import redis from "../../utils/redis";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]";
 
 type Data = string;
 interface ExtendedNextApiRequest extends NextApiRequest {
@@ -10,11 +11,11 @@ interface ExtendedNextApiRequest extends NextApiRequest {
   };
 }
 
-// Create a new ratelimiter, that allows 3 requests per day
+// Create a new ratelimiter, that allows 5 requests per day
 const ratelimit = redis
   ? new Ratelimit({
       redis: redis,
-      limiter: Ratelimit.fixedWindow(3, "1440 m"),
+      limiter: Ratelimit.fixedWindow(5, "1440 m"),
       analytics: true,
     })
   : undefined;
@@ -23,18 +24,32 @@ export default async function handler(
   req: ExtendedNextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  // Rate Limiter Code
+  // Check if user is logged in
+  const session = await getServerSession(req, res, authOptions);
+  if (!session || !session.user) {
+    return res.status(500).json("Login to upload.");
+  }
+
+  // Rate Limiting by user email
   if (ratelimit) {
-    const identifier = requestIp.getClientIp(req);
+    const identifier = session.user.email;
     const result = await ratelimit.limit(identifier!);
     res.setHeader("X-RateLimit-Limit", result.limit);
     res.setHeader("X-RateLimit-Remaining", result.remaining);
 
+    // Calcualte the remaining time until generations are reset
+    const diff = Math.abs(
+      new Date(result.reset).getTime() - new Date().getTime()
+    );
+    const hours = Math.floor(diff / 1000 / 60 / 60);
+    const minutes = Math.floor(diff / 1000 / 60) - hours * 60;
+
     if (!result.success) {
-      res
+      return res
         .status(429)
-        .json("Too many uploads in 1 day. Please try again after 24 hours.");
-      return;
+        .json(
+          `Your generations will renew in ${hours} hours and ${minutes} minutes. Email hassan@hey.com if you have any questions.`
+        );
     }
   }
 
