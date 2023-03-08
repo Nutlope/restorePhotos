@@ -1,6 +1,5 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import type { NextApiRequest, NextApiResponse } from "next";
-import requestIp from "request-ip";
 import redis from "../../utils/redis";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
@@ -12,11 +11,11 @@ interface ExtendedNextApiRequest extends NextApiRequest {
   };
 }
 
-// Create a new ratelimiter, that allows 3 requests per day
+// Create a new ratelimiter, that allows 4 requests per day
 const ratelimit = redis
   ? new Ratelimit({
       redis: redis,
-      limiter: Ratelimit.fixedWindow(3, "1440 m"),
+      limiter: Ratelimit.fixedWindow(4, "1440 m"),
       analytics: true,
     })
   : undefined;
@@ -49,7 +48,7 @@ export default async function handler(
       return res
         .status(429)
         .json(
-          `Too many uploads in 1 day. Your generations will renew in ${hours} hours and ${minutes} minutes.`
+          `Your generations will renew in ${hours} hours and ${minutes} minutes.`
         );
     }
   }

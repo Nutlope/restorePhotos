@@ -13,7 +13,6 @@ const Home: NextPage = () => {
       <Head>
         <title>Face Photo Restorer</title>
       </Head>
-
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 sm:mt-28 mt-20">
         <a

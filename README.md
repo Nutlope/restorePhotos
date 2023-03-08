@@ -1,8 +1,11 @@
 ## Todos
 
-- [ ] Add "5 image image restorations left" with countdown, do it in separate edge function
+Extra:
+
+- [ ] Bug with query not being incremented for some reason to show folks how many generations they have left
 - [ ] Add logsnag for notifications
-- [ ] Add signout to the profile picture
+- [ ] Add signout to the profile picture in a dropdown
+- [ ] Convert remaining.tsx to an edge function
 
 # [RestorePhotos.io](https://restorephotos.io/)
 

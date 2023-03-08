@@ -17,6 +17,7 @@ import downloadPhoto from "../utils/downloadPhoto";
 import NSFWPredictor from "../utils/nsfwCheck";
 import va from "@vercel/analytics";
 import { useSession, signIn, signOut } from "next-auth/react";
+import useSWR from "swr";
 
 // Configuration for the uploader
 const uploader = Uploader({
@@ -44,6 +45,8 @@ const options = {
   },
 };
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const Home: NextPage = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
   const [restoredImage, setRestoredImage] = useState<string | null>(null);
@@ -52,6 +55,9 @@ const Home: NextPage = () => {
   const [sideBySide, setSideBySide] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [photoName, setPhotoName] = useState<string | null>(null);
+
+  const { data: remainingMessage } = useSWR("/api/remaining", fetcher);
+  const { data: session, status } = useSession();
 
   const UploadDropZone = () => (
     <UploadDropzone
@@ -89,8 +95,6 @@ const Home: NextPage = () => {
     setLoading(false);
   }
 
-  const { data: session, status } = useSession();
-
   return (
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Head>
@@ -98,7 +102,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header photo={session?.user?.image || null} />
+      <Header photo={session?.user?.image || undefined} />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8">
         <a
           href="https://youtu.be/FRQtFDDrUXQ"
@@ -112,14 +116,10 @@ const Home: NextPage = () => {
         <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl mb-5">
           Restore any face photo
         </h1>
-        <p className="text-slate-500">
-          {" "}
-          {/* Obtained this number from Vercel: based on how many serverless invocations happened. */}
-          <CountUp start={100000} end={325321} duration={2} separator="," />{" "}
-          photos generated and counting.
-        </p>
+        <p className="text-slate-500">325,321 images restored and counting.</p>
+        {/* <p className="text-slate-500">{remainingMessage}</p> */}
         <ResizablePanel>
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode="wait">
             <motion.div className="flex justify-between items-center w-full flex-col mt-4">
               <Toggle
                 className={`${restoredLoaded ? "visible" : "invisible"} mb-6`}
@@ -196,10 +196,15 @@ const Home: NextPage = () => {
               )}
               {error && (
                 <div
-                  className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mt-8"
+                  className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mt-8 max-w-[575px]"
                   role="alert"
                 >
-                  <span className="block sm:inline">{error}</span>
+                  <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                    Please try again in 24 hours
+                  </div>
+                  <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+                    {error}
+                  </div>
                 </div>
               )}
               <div className="flex space-x-2 justify-center">
