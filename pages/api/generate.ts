@@ -11,11 +11,11 @@ interface ExtendedNextApiRequest extends NextApiRequest {
   };
 }
 
-// Create a new ratelimiter, that allows 4 requests per day
+// Create a new ratelimiter, that allows 5 requests per day
 const ratelimit = redis
   ? new Ratelimit({
       redis: redis,
-      limiter: Ratelimit.fixedWindow(4, "1440 m"),
+      limiter: Ratelimit.fixedWindow(5, "1440 m"),
       analytics: true,
     })
   : undefined;
@@ -48,7 +48,7 @@ export default async function handler(
       return res
         .status(429)
         .json(
-          `Your generations will renew in ${hours} hours and ${minutes} minutes.`
+          `Your generations will renew in ${hours} hours and ${minutes} minutes. Email hassan@hey.com if you have any questions.`
         );
     }
   }

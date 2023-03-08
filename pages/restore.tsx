@@ -15,7 +15,7 @@ import downloadPhoto from "../utils/downloadPhoto";
 import NSFWPredictor from "../utils/nsfwCheck";
 import va from "@vercel/analytics";
 import { useSession, signIn } from "next-auth/react";
-import useSWR from "swr";
+// import useSWR from "swr";
 import { Rings } from "react-loader-spinner";
 
 // Configuration for the uploader
@@ -44,8 +44,6 @@ const options = {
   },
 };
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 const Home: NextPage = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
   const [restoredImage, setRestoredImage] = useState<string | null>(null);
@@ -55,7 +53,8 @@ const Home: NextPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [photoName, setPhotoName] = useState<string | null>(null);
 
-  const { data: remainingMessage } = useSWR("/api/remaining", fetcher);
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  // const { data: remainingMessage } = useSWR("/api/remaining", fetcher);
   const { data: session, status } = useSession();
 
   const UploadDropZone = () => (
@@ -107,7 +106,7 @@ const Home: NextPage = () => {
           href="https://youtu.be/FRQtFDDrUXQ"
           target="_blank"
           rel="noreferrer"
-          className="border rounded-2xl py-1 px-4 text-slate-500 text-sm mb-5 hover:scale-105 transition duration-300 ease-in-out"
+          className="border rounded-2xl py-1 px-4 text-slate-500 text-sm mb-5 hover:text-slate-600 transition duration-300 ease-in-out"
         >
           Want to learn how I built this? Watch the{" "}
           <span className="font-bold">YouTube tutorial</span>.
