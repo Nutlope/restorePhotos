@@ -30,14 +30,14 @@ export default async function handler(
     return res.status(500).json("Login to upload.");
   }
 
-  // Rate Limiter Code by email
+  // Rate Limiting by user email
   if (ratelimit) {
     const identifier = session.user.email;
     const result = await ratelimit.limit(identifier!);
     res.setHeader("X-RateLimit-Limit", result.limit);
     res.setHeader("X-RateLimit-Remaining", result.remaining);
 
-    // Calcualte the remaining time
+    // Calcualte the remaining time until generations are reset
     const diff = Math.abs(
       new Date(result.reset).getTime() - new Date().getTime()
     );

@@ -13,13 +13,11 @@ export default async function handler(
     return res.status(500).json("Login to upload.");
   }
 
-  // Query the redis database by email to get the number of generations left
+  // Query the redis database by email to get the number of generations left - This does not work
   const identifier = session.user.email;
   const remainingGenerations = await redis?.get(
     `@upstash/ratelimit:${identifier!}:19423`
   );
-
-  console.log({ remainingGenerations });
 
   // Calculate the remaining time until reset
   const resetDate = new Date();
@@ -33,11 +31,15 @@ export default async function handler(
       .status(200)
       .json(
         `You have 0 generations left today. Your generation${
-          Number(remainingGenerations) > 1 ? "s" : null
+          Number(remainingGenerations) > 1 ? "s" : ""
         } will renew in ${hours} hours and ${minutes} minutes.`
       );
   }
   return res
     .status(200)
-    .json(`You have ${remainingGenerations} generations remaining for today.`);
+    .json(
+      `You have ${remainingGenerations} generation${
+        Number(remainingGenerations) > 1 ? "s" : ""
+      } remaining for today.`
+    );
 }
