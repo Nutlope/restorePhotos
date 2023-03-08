@@ -109,20 +109,22 @@ const Home: NextPage = () => {
           rel="noreferrer"
           className="border rounded-2xl py-1 px-4 text-slate-500 text-sm mb-5 hover:scale-105 transition duration-300 ease-in-out"
         >
-          Are you a developer and want to learn how I built this? Watch the{" "}
+          Want to learn how I built this? Watch the{" "}
           <span className="font-bold">YouTube tutorial</span>.
         </a>
         <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl mb-5">
           Restore any face photo
         </h1>
-        <p className="text-slate-500">
-          <CountUp start={100000} end={647143} duration={1} separator="," />{" "}
-          images restored and counting.
-        </p>
+        {status === "authenticated" && (
+          <p className="text-slate-500">
+            <CountUp start={100000} end={647143} duration={1} separator="," />{" "}
+            images restored and counting.
+          </p>
+        )}
         {/* <p className="text-slate-500 font-medium">{remainingMessage}</p> */}
         <div className="flex justify-between items-center w-full flex-col mt-4">
           <Toggle
-            className={`${restoredLoaded ? "visible" : "invisible"} mb-6`}
+            className={`${restoredLoaded ? "visible mb-6" : "invisible"}`}
             sideBySide={sideBySide}
             setSideBySide={(newVal) => setSideBySide(newVal)}
           />
@@ -149,12 +151,23 @@ const Home: NextPage = () => {
             <UploadDropZone />
           ) : (
             !originalPhoto && (
-              <div className="h-[250px]">
+              <div className="h-[250px] flex flex-col items-center space-y-6 w-[670px] -mt-8">
+                <div className="max-w-xl text-gray-600">
+                  Sign in below with Google to create a free account and restore
+                  your photos today. You will be able to restore 5 photos per
+                  day for free.
+                </div>
                 <button
                   onClick={() => signIn("google")}
-                  className="bg-slate-500 text-white font-bold py-2 px-4 rounded-2xl"
+                  className="bg-gray-200 text-black font-semibold py-3 px-6 rounded-2xl flex items-center space-x-2"
                 >
-                  Sign in with Google to upload photos
+                  <Image
+                    src="/google.png"
+                    width={20}
+                    height={20}
+                    alt="google's logo"
+                  />
+                  <span>Sign in with Google</span>
                 </button>
               </div>
             )

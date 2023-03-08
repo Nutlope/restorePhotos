@@ -1,11 +1,10 @@
 ## Todos
 
-- [ ] Make the sign in button look better
-- [ ] Bug with query not being incremented for some reason to show folks how many generations they have left
 - [ ] Add logsnag for notifications
 
 Extra:
 
+- [ ] Bug with query not being incremented for some reason to show folks how many generations they have left
 - [ ] Add signout to the profile picture in a dropdown
 - [ ] Convert remaining.tsx to an edge function
 
