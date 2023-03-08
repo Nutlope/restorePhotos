@@ -10,7 +10,7 @@ It uses an ML model from the Applied Research Center called [GFPGAN](https://git
 
 ## Running Locally
 
-Note: I just added auth so these steps are not complete as of now. You can git clone from [this specific commit](https://github.com/Nutlope/restorePhotos/tree/1c5c8ac4f52a08f68a3091d3b21be8a65aef71f2)
+Note: I just added auth so these steps are not complete as of now. You can git clone from [this specific commit](https://github.com/Nutlope/restorePhotos/tree/1c5c8ac4f52a08f68a3091d3b21be8a65aef71f2).
 
 ### Cloning the repository the local machine.
 
@@ -52,7 +52,7 @@ Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_mediu
 
 ## Powered by
 
-This example is powered by the following 3 services:
+This example is powered by the following services:
 
 - [Replicate](https://replicate.com) (AI API)
 - [Upload](https://upload.io) (storage)
