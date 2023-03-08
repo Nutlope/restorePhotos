@@ -10,6 +10,8 @@ It uses an ML model from the Applied Research Center called [GFPGAN](https://git
 
 ## Running Locally
 
+Note: I just added auth so these steps are not complete as of now. You can git clone from [this specific commit](https://github.com/Nutlope/restorePhotos/tree/1c5c8ac4f52a08f68a3091d3b21be8a65aef71f2)
+
 ### Cloning the repository the local machine.
 
 ```bash
@@ -56,3 +58,4 @@ This example is powered by the following 3 services:
 - [Upload](https://upload.io) (storage)
 - [Vercel](https://vercel.com) (hosting, serverless functions, analytics)
 - [Auth.js](https://authjs.dev/) + [Neon](https://neon.tech/) (auth + DB)
+- [Upstash](https://upstash.com/) Redis (rate limiting)
