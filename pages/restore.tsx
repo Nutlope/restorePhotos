@@ -14,7 +14,7 @@ import appendNewToName from "../utils/appendNewToName";
 import downloadPhoto from "../utils/downloadPhoto";
 import NSFWPredictor from "../utils/nsfwCheck";
 import va from "@vercel/analytics";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import useSWR from "swr";
 import { Rings } from "react-loader-spinner";
 
@@ -135,7 +135,7 @@ const Home: NextPage = () => {
             />
           )}
           {status === "loading" ? (
-            <div className="w-[670px] h-[250px] flex justify-center items-center">
+            <div className="max-w-[670px] h-[250px] flex justify-center items-center">
               <Rings
                 height="100"
                 width="100"
@@ -151,7 +151,7 @@ const Home: NextPage = () => {
             <UploadDropZone />
           ) : (
             !originalPhoto && (
-              <div className="h-[250px] flex flex-col items-center space-y-6 w-[670px] -mt-8">
+              <div className="h-[250px] flex flex-col items-center space-y-6 max-w-[670px] -mt-8">
                 <div className="max-w-xl text-gray-600">
                   Sign in below with Google to create a free account and restore
                   your photos today. You will be able to restore 5 photos per
