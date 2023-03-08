@@ -55,4 +55,4 @@ This example is powered by the following 3 services:
 - [Replicate](https://replicate.com) (AI API)
 - [Upload](https://upload.io) (storage)
 - [Vercel](https://vercel.com) (hosting, serverless functions, analytics)
-- NextAuth + Neon (auth + DB)
+- [Auth.js](https://authjs.dev/) + [Neon](https://neon.tech/) (auth + DB)
