@@ -15,7 +15,7 @@ import downloadPhoto from "../utils/downloadPhoto";
 import NSFWPredictor from "../utils/nsfwCheck";
 import va from "@vercel/analytics";
 import { useSession, signIn } from "next-auth/react";
-// import useSWR from "swr";
+import useSWR from "swr";
 import { Rings } from "react-loader-spinner";
 
 // Configuration for the uploader
@@ -53,8 +53,8 @@ const Home: NextPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [photoName, setPhotoName] = useState<string | null>(null);
 
-  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  // const { data: remainingMessage } = useSWR("/api/remaining", fetcher);
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data, mutate } = useSWR("/api/remaining", fetcher);
   const { data: session, status } = useSession();
 
   const UploadDropZone = () => (
@@ -76,6 +76,7 @@ const Home: NextPage = () => {
   async function generatePhoto(fileUrl: string) {
     await new Promise((resolve) => setTimeout(resolve, 500));
     setLoading(true);
+
     const res = await fetch("/api/generate", {
       method: "POST",
       headers: {
@@ -88,6 +89,7 @@ const Home: NextPage = () => {
     if (res.status !== 200) {
       setError(newPhoto);
     } else {
+      mutate();
       setRestoredImage(newPhoto);
     }
     setLoading(false);
@@ -103,24 +105,30 @@ const Home: NextPage = () => {
       <Header photo={session?.user?.image || undefined} />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8">
         <a
-          href="https://youtu.be/FRQtFDDrUXQ"
+          href="https://twitter.com/nutlope/status/1626074563481051136"
           target="_blank"
           rel="noreferrer"
           className="border rounded-2xl py-1 px-4 text-slate-500 text-sm mb-5 hover:text-slate-600 transition duration-300 ease-in-out"
         >
-          Want to learn how I built this? Watch the{" "}
-          <span className="font-bold">YouTube tutorial</span>.
+          <span className="font-semibold">647,143 images</span> restored and
+          counting
         </a>
         <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl mb-5">
           Restore any face photo
         </h1>
-        {status === "authenticated" && (
+        {status === "authenticated" && data && (
           <p className="text-slate-500">
-            <CountUp start={100000} end={647143} duration={1} separator="," />{" "}
-            images restored and counting.
+            You have{" "}
+            <span className="font-semibold">
+              {data.remainingGenerations} generations
+            </span>{" "}
+            left today. Your generation
+            {Number(data.remainingGenerations) > 1 ? "s" : ""} will renew in{" "}
+            <span className="font-semibold">
+              {data.hours} hours and {data.minutes} minutes.
+            </span>
           </p>
         )}
-        {/* <p className="text-slate-500 font-medium">{remainingMessage}</p> */}
         <div className="flex justify-between items-center w-full flex-col mt-4">
           <Toggle
             className={`${restoredLoaded ? "visible mb-6" : "invisible"}`}
