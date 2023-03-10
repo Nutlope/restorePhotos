@@ -2,7 +2,6 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
-import CountUp from "react-countup";
 import { UploadDropzone } from "react-uploader";
 import { Uploader } from "uploader";
 import { CompareSlider } from "../components/CompareSlider";
@@ -25,25 +24,6 @@ const uploader = Uploader({
     : "free",
 });
 
-const options = {
-  maxFileCount: 1,
-  mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
-  editor: { images: { crop: false } },
-  styles: { colors: { primary: "#000" } },
-  onValidate: async (file: File): Promise<undefined | string> => {
-    let isSafe = false;
-    try {
-      isSafe = await NSFWPredictor.isSafeImg(file);
-      if (!isSafe) va.track("NSFW Image blocked");
-    } catch (error) {
-      console.error("NSFW predictor threw an error", error);
-    }
-    return isSafe
-      ? undefined
-      : "Detected a NSFW image which is not allowed. If this was a mistake, please contact me at hassan@hey.com";
-  },
-};
-
 const Home: NextPage = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
   const [restoredImage, setRestoredImage] = useState<string | null>(null);
@@ -56,6 +36,29 @@ const Home: NextPage = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, mutate } = useSWR("/api/remaining", fetcher);
   const { data: session, status } = useSession();
+
+  const options = {
+    maxFileCount: 1,
+    mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
+    editor: { images: { crop: false } },
+    styles: { colors: { primary: "#000" } },
+    onValidate: async (file: File): Promise<undefined | string> => {
+      let isSafe = false;
+      try {
+        isSafe = await NSFWPredictor.isSafeImg(file);
+        if (!isSafe) va.track("NSFW Image blocked");
+      } catch (error) {
+        console.error("NSFW predictor threw an error", error);
+      }
+      if (!isSafe) {
+        return "Detected a NSFW image which is not allowed. If this was a mistake, please contact me at hassan@hey.com";
+      }
+      if (data.remainingGenerations === 0) {
+        return "No more generations left for the day.";
+      }
+      return undefined;
+    },
+  };
 
   const UploadDropZone = () => (
     <UploadDropzone
