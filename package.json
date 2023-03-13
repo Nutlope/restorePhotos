@@ -12,7 +12,7 @@
     "@next-auth/prisma-adapter": "^1.0.5",
     "@prisma/client": "^4.11.0",
     "@tensorflow/tfjs": "^3.21.0",
-    "@upstash/ratelimit": "^0.3.8",
+    "@upstash/ratelimit": "^0.3.10",
     "@upstash/redis": "^1.19.1",
     "@vercel/analytics": "^0.1.9-beta.4",
     "next": "latest",
