@@ -51,7 +51,7 @@ const Home: NextPage = () => {
         console.error("NSFW predictor threw an error", error);
       }
       if (!isSafe) {
-        return "Detected a NSFW image which is not allowed. If this was a mistake, please contact me at hassan@hey.com";
+        return "Detected a NSFW image which is not allowed.";
       }
       if (data.remainingGenerations === 0) {
         return "No more generations left for the day.";
