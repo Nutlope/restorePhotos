@@ -8,7 +8,6 @@ export default function Footer() {
         <a
           href="https://replicate.com/"
           target="_blank"
-          rel="noreferrer"
           className="font-bold transition hover:text-black/50"
         >
           Replicate,{" "}
@@ -16,7 +15,6 @@ export default function Footer() {
         <a
           href="https://upload.io"
           target="_blank"
-          rel="noreferrer"
           className="font-bold transition hover:text-black/50"
         >
           Upload,{" "}
@@ -25,7 +23,6 @@ export default function Footer() {
         <a
           href="https://vercel.com/"
           target="_blank"
-          rel="noreferrer"
           className="font-bold transition hover:text-black/50"
         >
           Vercel.
