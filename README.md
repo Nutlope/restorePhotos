@@ -55,7 +55,7 @@ Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_mediu
 This example is powered by the following services:
 
 - [Replicate](https://replicate.com) (AI API)
-- [Upload](https://upload.io) (storage)
+- [Bytescale](https://www.bytescale.com/) (storage + image processing API)
 - [Vercel](https://vercel.com) (hosting, serverless functions, analytics)
 - [Auth.js](https://authjs.dev/) + [Neon](https://neon.tech/) (auth + DB)
 - [Upstash](https://upstash.com/) Redis (rate limiting)
