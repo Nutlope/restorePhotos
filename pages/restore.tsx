@@ -14,7 +14,7 @@ import Toggle from "../components/Toggle";
 import downloadPhoto from "../utils/downloadPhoto";
 
 // Configuration for the uploader
-const uploader = Uploader({ apiKey: "free" });
+const uploader = Uploader({ apiKey: process.env.NEXT_PUBLIC_UPLOAD_API_KEY || "free" });
 const options = {
   maxFileCount: 1,
   mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
