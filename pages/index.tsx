@@ -11,7 +11,7 @@ const Home: NextPage = () => {
   return (
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Head>
-        <title>Face Photo Restorer</title>
+        <title>DrafterAI</title>
       </Head>
 
       <Header />
@@ -22,17 +22,16 @@ const Home: NextPage = () => {
             <SquigglyLines />
             <span className="relative">using AI</span>
           </span>{" "}
-          for everyone.
+          for Artists.
         </h1>
         <p className="mx-auto mt-12 max-w-xl text-lg text-slate-700 leading-7">
-          Have old and blurry face photos? Let our AI restore them so those
-          memories can live on. 100% free – restore your photos today.
+          Tired of your clients not knowing what they want? – DrafterAI is your new best firend!
         </p>
         <Link
           className="bg-black rounded-full text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80"
           href="/restore"
         >
-          Restore your photos
+          Upload your designs
         </Link>
         <div className="flex justify-between items-center w-full flex-col sm:mt-10 mt-6">
           <div className="flex flex-col space-y-10 mt-4">
