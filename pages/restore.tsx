@@ -18,11 +18,13 @@ import useSWR from "swr";
 import { Rings } from "react-loader-spinner";
 
 // Configuration for the uploader
-const uploader = Uploader({
-  apiKey: !!process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    : "free",
-});
+const uploader = Uploader({ apiKey: process.env.NEXT_PUBLIC_UPLOAD_API_KEY || "free" });
+const options = {
+  maxFileCount: 1,
+  mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
+  editor: { images: { crop: false } },
+  styles: { colors: { primary: "#000" } },
+};
 
 const Home: NextPage = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
