@@ -23,10 +23,10 @@
     "react-countup": "^6.4.0",
     "react-dom": "18.2.0",
     "react-loader-spinner": "^5.3.4",
-    "react-uploader": "^3.3.0",
+    "react-uploader": "^3.11.0",
     "react-use-measure": "^2.1.1",
     "swr": "^2.1.0",
-    "uploader": "^3.3.0"
+    "uploader": "^3.10.0"
   },
   "devDependencies": {
     "@types/node": "18.11.3",
