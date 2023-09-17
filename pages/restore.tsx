@@ -17,6 +17,7 @@ import { useSession, signIn } from "next-auth/react";
 import useSWR from "swr";
 import { Rings } from "react-loader-spinner";
 import {OnPreUploadResult} from "@bytescale/upload-widget/dist/config/OnPreUploadResult";
+import {UrlBuilder} from "@bytescale/sdk";
 
 const Home: NextPage = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
@@ -60,11 +61,21 @@ const Home: NextPage = () => {
   const UploadDropZone = () => (
     <UploadDropzone
       options={options}
-      onUpdate={(file) => {
-        if (file.length !== 0) {
-          setPhotoName(file[0].originalFile.originalFileName);
-          setOriginalPhoto(file[0].fileUrl.replace("raw", "thumbnail"));
-          generatePhoto(file[0].fileUrl.replace("raw", "thumbnail"));
+      onUpdate={(files) => {
+        if (files.length !== 0) {
+          const image = files[0];
+          const imageName = image.originalFile.originalFileName
+          const imageUrl = UrlBuilder.url({
+            accountId: image.originalFile.accountId,
+            filePath: image.filePath,
+            options: {
+              transformation: "preset",
+              transformationPreset: "thumbnail"
+            }
+          });
+          setPhotoName(imageName);
+          setOriginalPhoto(imageUrl);
+          generatePhoto(imageUrl);
         }
       }}
       width="670px"
