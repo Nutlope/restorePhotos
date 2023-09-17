@@ -2,8 +2,9 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
+import { UrlBuilder } from "@bytescale/sdk";
+import { UploadWidgetConfig, UploadWidgetOnPreUploadResult } from "@bytescale/upload-widget";
 import { UploadDropzone } from "@bytescale/upload-widget-react";
-import { UploadWidgetConfig } from "@bytescale/upload-widget";
 import { CompareSlider } from "../components/CompareSlider";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -16,8 +17,6 @@ import va from "@vercel/analytics";
 import { useSession, signIn } from "next-auth/react";
 import useSWR from "swr";
 import { Rings } from "react-loader-spinner";
-import {OnPreUploadResult} from "@bytescale/upload-widget/dist/config/OnPreUploadResult";
-import {UrlBuilder} from "@bytescale/sdk";
 
 const Home: NextPage = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
@@ -40,7 +39,7 @@ const Home: NextPage = () => {
     mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
     editor: { images: { crop: false } },
     styles: { colors: { primary: "#000" } },
-    onPreUpload: async (file: File): Promise<OnPreUploadResult | undefined> => {
+    onPreUpload: async (file: File): Promise<UploadWidgetOnPreUploadResult | undefined> => {
       let isSafe = false;
       try {
         isSafe = await NSFWPredictor.isSafeImg(file);
@@ -61,12 +60,12 @@ const Home: NextPage = () => {
   const UploadDropZone = () => (
     <UploadDropzone
       options={options}
-      onUpdate={(files) => {
-        if (files.length !== 0) {
-          const image = files[0];
-          const imageName = image.originalFile.originalFileName
+      onUpdate={({ uploadedFiles }) => {
+        if (uploadedFiles.length !== 0) {
+          const image = uploadedFiles[0];
+          const imageName = image.originalFile.originalFileName;
           const imageUrl = UrlBuilder.url({
-            accountId: image.originalFile.accountId,
+            accountId: image.accountId,
             filePath: image.filePath,
             options: {
               transformation: "preset",
