@@ -8,6 +8,7 @@
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
+    "@bytescale/upload-widget-react": "^4.7.0",
     "@headlessui/react": "^1.7.7",
     "@next-auth/prisma-adapter": "^1.0.5",
     "@prisma/client": "^4.11.0",
@@ -23,10 +24,8 @@
     "react-countup": "^6.4.0",
     "react-dom": "18.2.0",
     "react-loader-spinner": "^5.3.4",
-    "react-uploader": "^3.3.0",
     "react-use-measure": "^2.1.1",
-    "swr": "^2.1.0",
-    "uploader": "^3.3.0"
+    "swr": "^2.1.0"
   },
   "devDependencies": {
     "@types/node": "18.11.3",

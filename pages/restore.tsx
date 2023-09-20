@@ -2,8 +2,9 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
-import { UploadDropzone } from "react-uploader";
-import { Uploader } from "uploader";
+import { UrlBuilder } from "@bytescale/sdk";
+import { UploadWidgetConfig, UploadWidgetOnPreUploadResult } from "@bytescale/upload-widget";
+import { UploadDropzone } from "@bytescale/upload-widget-react";
 import { CompareSlider } from "../components/CompareSlider";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -16,13 +17,6 @@ import va from "@vercel/analytics";
 import { useSession, signIn } from "next-auth/react";
 import useSWR from "swr";
 import { Rings } from "react-loader-spinner";
-
-// Configuration for the uploader
-const uploader = Uploader({
-  apiKey: !!process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    : "free",
-});
 
 const Home: NextPage = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
@@ -37,12 +31,15 @@ const Home: NextPage = () => {
   const { data, mutate } = useSWR("/api/remaining", fetcher);
   const { data: session, status } = useSession();
 
-  const options = {
+  const options: UploadWidgetConfig = {
+    apiKey: !!process.env.NEXT_PUBLIC_UPLOAD_API_KEY
+        ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
+        : "free",
     maxFileCount: 1,
     mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
     editor: { images: { crop: false } },
     styles: { colors: { primary: "#000" } },
-    onValidate: async (file: File): Promise<undefined | string> => {
+    onPreUpload: async (file: File): Promise<UploadWidgetOnPreUploadResult | undefined> => {
       let isSafe = false;
       try {
         isSafe = await NSFWPredictor.isSafeImg(file);
@@ -51,10 +48,10 @@ const Home: NextPage = () => {
         console.error("NSFW predictor threw an error", error);
       }
       if (!isSafe) {
-        return "Detected a NSFW image which is not allowed.";
+        return { errorMessage: "Detected a NSFW image which is not allowed." };
       }
       if (data.remainingGenerations === 0) {
-        return "No more generations left for the day.";
+        return { errorMessage: "No more generations left for the day." };
       }
       return undefined;
     },
@@ -62,13 +59,22 @@ const Home: NextPage = () => {
 
   const UploadDropZone = () => (
     <UploadDropzone
-      uploader={uploader}
       options={options}
-      onUpdate={(file) => {
-        if (file.length !== 0) {
-          setPhotoName(file[0].originalFile.originalFileName);
-          setOriginalPhoto(file[0].fileUrl.replace("raw", "thumbnail"));
-          generatePhoto(file[0].fileUrl.replace("raw", "thumbnail"));
+      onUpdate={({ uploadedFiles }) => {
+        if (uploadedFiles.length !== 0) {
+          const image = uploadedFiles[0];
+          const imageName = image.originalFile.originalFileName;
+          const imageUrl = UrlBuilder.url({
+            accountId: image.accountId,
+            filePath: image.filePath,
+            options: {
+              transformation: "preset",
+              transformationPreset: "thumbnail"
+            }
+          });
+          setPhotoName(imageName);
+          setOriginalPhoto(imageUrl);
+          generatePhoto(imageUrl);
         }
       }}
       width="670px"
