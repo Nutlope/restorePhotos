@@ -8,7 +8,7 @@
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
-    "@bytescale/upload-widget-react": "^4.7.0",
+    "@bytescale/upload-widget-react": "^4.9.0",
     "@headlessui/react": "^1.7.7",
     "@next-auth/prisma-adapter": "^1.0.5",
     "@prisma/client": "^4.11.0",
