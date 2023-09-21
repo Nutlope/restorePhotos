@@ -1,11 +1,11 @@
-import { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import SquigglyLines from "../components/SquigglyLines";
-import { Testimonials } from "../components/Testimonials";
+import { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import SquigglyLines from '../components/SquigglyLines';
+import { Testimonials } from '../components/Testimonials';
 
 const Home: NextPage = () => {
   return (
@@ -16,20 +16,20 @@ const Home: NextPage = () => {
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 sm:mt-28 mt-20">
         <a
-          href="https://twitter.com/nutlope/status/1626074563481051136"
+          href="https://twitter.com/nutlope/status/1704894145003741611"
           target="_blank"
           rel="noreferrer"
           className="border rounded-2xl py-1 px-4 text-slate-500 text-sm mb-5 hover:scale-105 transition duration-300 ease-in-out"
         >
-          Used by over <span className="font-semibold">300,000</span> happy
+          Used by over <span className="font-semibold">470,000</span> happy
           users
         </a>
         <h1 className="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-slate-900 sm:text-7xl">
-          Restoring old photos{" "}
+          Restoring old photos{' '}
           <span className="relative whitespace-nowrap text-[#3290EE]">
             <SquigglyLines />
             <span className="relative">using AI</span>
-          </span>{" "}
+          </span>{' '}
           for everyone.
         </h1>
 
