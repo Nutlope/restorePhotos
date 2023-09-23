@@ -15,7 +15,7 @@ import LoadingDots from '../components/LoadingDots';
 import Toggle from '../components/Toggle';
 import appendNewToName from '../utils/appendNewToName';
 import downloadPhoto from '../utils/downloadPhoto';
-import NSFWPredictor from 'nsfw-filter';
+import NSFWFilter from 'nsfw-filter';
 import va from '@vercel/analytics';
 import { useSession, signIn } from 'next-auth/react';
 import useSWR from 'swr';
@@ -47,7 +47,7 @@ const Home: NextPage = () => {
     ): Promise<UploadWidgetOnPreUploadResult | undefined> => {
       let isSafe = false;
       try {
-        isSafe = await NSFWPredictor.isSafeImg(file);
+        isSafe = await NSFWFilter.isSafe(file);
         console.log({ isSafe });
         if (!isSafe) va.track('NSFW Image blocked');
       } catch (error) {
