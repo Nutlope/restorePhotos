@@ -18,6 +18,7 @@
     "@vercel/analytics": "^0.1.9-beta.4",
     "next": "latest",
     "next-auth": "^4.20.1",
+    "nsfw-filter": "^1.0.0",
     "nsfwjs": "^2.4.2",
     "react": "18.2.0",
     "react-compare-slider": "^2.2.0",

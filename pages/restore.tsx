@@ -1,22 +1,25 @@
-import { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import { useState } from "react";
-import { UrlBuilder } from "@bytescale/sdk";
-import { UploadWidgetConfig, UploadWidgetOnPreUploadResult } from "@bytescale/upload-widget";
-import { UploadDropzone } from "@bytescale/upload-widget-react";
-import { CompareSlider } from "../components/CompareSlider";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import LoadingDots from "../components/LoadingDots";
-import Toggle from "../components/Toggle";
-import appendNewToName from "../utils/appendNewToName";
-import downloadPhoto from "../utils/downloadPhoto";
-import NSFWPredictor from "../utils/nsfwCheck";
-import va from "@vercel/analytics";
-import { useSession, signIn } from "next-auth/react";
-import useSWR from "swr";
-import { Rings } from "react-loader-spinner";
+import { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useState } from 'react';
+import { UrlBuilder } from '@bytescale/sdk';
+import {
+  UploadWidgetConfig,
+  UploadWidgetOnPreUploadResult,
+} from '@bytescale/upload-widget';
+import { UploadDropzone } from '@bytescale/upload-widget-react';
+import { CompareSlider } from '../components/CompareSlider';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import LoadingDots from '../components/LoadingDots';
+import Toggle from '../components/Toggle';
+import appendNewToName from '../utils/appendNewToName';
+import downloadPhoto from '../utils/downloadPhoto';
+import NSFWPredictor from 'nsfw-filter';
+import va from '@vercel/analytics';
+import { useSession, signIn } from 'next-auth/react';
+import useSWR from 'swr';
+import { Rings } from 'react-loader-spinner';
 
 const Home: NextPage = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
@@ -28,30 +31,33 @@ const Home: NextPage = () => {
   const [photoName, setPhotoName] = useState<string | null>(null);
 
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, mutate } = useSWR("/api/remaining", fetcher);
+  const { data, mutate } = useSWR('/api/remaining', fetcher);
   const { data: session, status } = useSession();
 
   const options: UploadWidgetConfig = {
     apiKey: !!process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-        ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-        : "free",
+      ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
+      : 'free',
     maxFileCount: 1,
-    mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
+    mimeTypes: ['image/jpeg', 'image/png', 'image/jpg'],
     editor: { images: { crop: false } },
-    styles: { colors: { primary: "#000" } },
-    onPreUpload: async (file: File): Promise<UploadWidgetOnPreUploadResult | undefined> => {
+    styles: { colors: { primary: '#000' } },
+    onPreUpload: async (
+      file: File
+    ): Promise<UploadWidgetOnPreUploadResult | undefined> => {
       let isSafe = false;
       try {
         isSafe = await NSFWPredictor.isSafeImg(file);
-        if (!isSafe) va.track("NSFW Image blocked");
+        console.log({ isSafe });
+        if (!isSafe) va.track('NSFW Image blocked');
       } catch (error) {
-        console.error("NSFW predictor threw an error", error);
+        console.error('NSFW predictor threw an error', error);
       }
       if (!isSafe) {
-        return { errorMessage: "Detected a NSFW image which is not allowed." };
+        return { errorMessage: 'Detected a NSFW image which is not allowed.' };
       }
       if (data.remainingGenerations === 0) {
-        return { errorMessage: "No more generations left for the day." };
+        return { errorMessage: 'No more generations left for the day.' };
       }
       return undefined;
     },
@@ -68,9 +74,9 @@ const Home: NextPage = () => {
             accountId: image.accountId,
             filePath: image.filePath,
             options: {
-              transformation: "preset",
-              transformationPreset: "thumbnail"
-            }
+              transformation: 'preset',
+              transformationPreset: 'thumbnail',
+            },
           });
           setPhotoName(imageName);
           setOriginalPhoto(imageUrl);
@@ -86,10 +92,10 @@ const Home: NextPage = () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     setLoading(true);
 
-    const res = await fetch("/api/generate", {
-      method: "POST",
+    const res = await fetch('/api/generate', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ imageUrl: fileUrl }),
     });
@@ -125,14 +131,14 @@ const Home: NextPage = () => {
         <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl mb-5">
           Restore any face photo
         </h1>
-        {status === "authenticated" && data && (
+        {status === 'authenticated' && data && (
           <p className="text-slate-500">
-            You have{" "}
+            You have{' '}
             <span className="font-semibold">
               {data.remainingGenerations} generations
-            </span>{" "}
+            </span>{' '}
             left today. Your generation
-            {Number(data.remainingGenerations) > 1 ? "s" : ""} will renew in{" "}
+            {Number(data.remainingGenerations) > 1 ? 's' : ''} will renew in{' '}
             <span className="font-semibold">
               {data.hours} hours and {data.minutes} minutes.
             </span>
@@ -140,7 +146,7 @@ const Home: NextPage = () => {
         )}
         <div className="flex justify-between items-center w-full flex-col mt-4">
           <Toggle
-            className={`${restoredLoaded ? "visible mb-6" : "invisible"}`}
+            className={`${restoredLoaded ? 'visible mb-6' : 'invisible'}`}
             sideBySide={sideBySide}
             setSideBySide={(newVal) => setSideBySide(newVal)}
           />
@@ -150,7 +156,7 @@ const Home: NextPage = () => {
               restored={restoredImage!}
             />
           )}
-          {status === "loading" ? (
+          {status === 'loading' ? (
             <div className="max-w-[670px] h-[250px] flex justify-center items-center">
               <Rings
                 height="100"
@@ -163,7 +169,7 @@ const Home: NextPage = () => {
                 ariaLabel="rings-loading"
               />
             </div>
-          ) : status === "authenticated" && !originalPhoto ? (
+          ) : status === 'authenticated' && !originalPhoto ? (
             <UploadDropZone />
           ) : (
             !originalPhoto && (
@@ -174,7 +180,7 @@ const Home: NextPage = () => {
                   day for free.
                 </div>
                 <button
-                  onClick={() => signIn("google")}
+                  onClick={() => signIn('google')}
                   className="bg-gray-200 text-black font-semibold py-3 px-6 rounded-2xl flex items-center space-x-2"
                 >
                   <Image
