@@ -1,5 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
+import va from '@vercel/analytics';
 
 export default function Header({ photo }: { photo?: string | undefined }) {
   return (
@@ -8,11 +9,11 @@ export default function Header({ photo }: { photo?: string | undefined }) {
         <Image
           alt="header text"
           src="/imageIcon.png"
-          className="sm:w-12 sm:h-12 w-7 h-7"
-          width={25}
-          height={25}
+          className="sm:w-10 sm:h-10 w-7 h-7"
+          width={20}
+          height={20}
         />
-        <h1 className="sm:text-4xl text-2xl font-bold ml-2 tracking-tight">
+        <h1 className="sm:text-3xl text-xl font-bold ml-2 tracking-tight">
           restorePhotos.io
         </h1>
       </Link>
@@ -25,19 +26,31 @@ export default function Header({ photo }: { photo?: string | undefined }) {
           height={28}
         />
       ) : (
-        <a
-          href="https://vercel.com/templates/next.js/ai-photo-restorer"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Image
-            alt="Vercel Icon"
-            src="/vercelLogo.png"
-            className="sm:w-10 sm:h-[34px] w-8 h-[28px]"
-            width={32}
-            height={28}
-          />
-        </a>
+        <div className="flex space-x-6">
+          <Link
+            href="/"
+            className="border-r border-gray-300 pr-4 space-x-2 hover:text-blue-400 transition hidden sm:flex"
+          >
+            <p className="font-medium text-base">Home</p>
+          </Link>
+          <Link
+            href="/restore"
+            className="border-r border-gray-300 pr-4 space-x-2 hover:text-blue-400 transition hidden sm:flex"
+          >
+            <p className="font-medium text-base">Restore</p>
+          </Link>
+          <a
+            href="https://www.roomgpt.io/"
+            className="border-gray-300 pr-4 space-x-2 hover:text-blue-400 transition hidden sm:flex"
+          >
+            <button
+              onClick={() => va.track('RoomGPT link clicked')}
+              className="font-medium text-base"
+            >
+              RoomGPT
+            </button>
+          </a>
+        </div>
       )}
     </header>
   );

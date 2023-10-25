@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SquigglyLines from '../components/SquigglyLines';
 import { Testimonials } from '../components/Testimonials';
+import va from '@vercel/analytics';
 
 const Home: NextPage = () => {
   return (
@@ -14,7 +15,7 @@ const Home: NextPage = () => {
         <title>Face Photo Restorer</title>
       </Head>
       <Header />
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 sm:mt-28 mt-20">
+      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-20">
         <a
           href="https://twitter.com/nutlope/status/1704894145003741611"
           target="_blank"
@@ -40,11 +41,13 @@ const Home: NextPage = () => {
         <div className="flex justify-center space-x-4">
           <a
             className="bg-white rounded-xl text-black font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-gray-100 border"
-            href="https://youtu.be/FRQtFDDrUXQ"
+            href="https://www.roomgpt.io/"
             target="_blank"
             rel="noreferrer"
           >
-            Learn how it's built
+            <button onClick={() => va.track('RoomGPT link clicked')}>
+              Check out roomGPT
+            </button>
           </a>
 
           <Link
