@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import va from '@vercel/analytics';
 
 export default function Header({ photo }: { photo?: string | undefined }) {
   return (
@@ -35,21 +34,10 @@ export default function Header({ photo }: { photo?: string | undefined }) {
           </Link>
           <Link
             href="/restore"
-            className="border-r border-gray-300 pr-4 space-x-2 hover:text-blue-400 transition hidden sm:flex"
+            className="border-gray-300 pr-4 space-x-2 hover:text-blue-400 transition hidden sm:flex"
           >
             <p className="font-medium text-base">Restore</p>
           </Link>
-          <a
-            href="https://www.roomgpt.io/"
-            className="border-gray-300 pr-4 space-x-2 hover:text-blue-400 transition hidden sm:flex"
-          >
-            <button
-              onClick={() => va.track('RoomGPT link clicked')}
-              className="font-medium text-base"
-            >
-              RoomGPT
-            </button>
-          </a>
         </div>
       )}
     </header>
