@@ -18,6 +18,7 @@
     "@vercel/analytics": "^1.0.2",
     "next": "latest",
     "next-auth": "^4.20.1",
+    "next-plausible": "^3.11.3",
     "nsfw-filter": "^1.0.2",
     "nsfwjs": "^2.4.2",
     "react": "18.2.0",
