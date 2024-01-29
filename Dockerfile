@@ -13,6 +13,8 @@ RUN npm install
 # Copy the project files into the container
 COPY . .
 
+# Environment variables are expected to be passed at runtime.
+
 # Build the app using the vercel-build script
 RUN npm run vercel-build
 
