@@ -1,8 +1,8 @@
-import { Ratelimit } from "@upstash/ratelimit";
-import type { NextApiRequest, NextApiResponse } from "next";
-import redis from "../../utils/redis";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "./auth/[...nextauth]";
+import { Ratelimit } from '@upstash/ratelimit';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import redis from '../../utils/redis';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './auth/[...nextauth]';
 
 type Data = string;
 interface ExtendedNextApiRequest extends NextApiRequest {
@@ -11,11 +11,11 @@ interface ExtendedNextApiRequest extends NextApiRequest {
   };
 }
 
-// Create a new ratelimiter, that allows 5 requests per day
+// Create a new ratelimiter, that allows 2 requests per day
 const ratelimit = redis
   ? new Ratelimit({
       redis: redis,
-      limiter: Ratelimit.fixedWindow(5, "1440 m"),
+      limiter: Ratelimit.fixedWindow(2, '1440 m'),
       analytics: true,
     })
   : undefined;
@@ -27,15 +27,15 @@ export default async function handler(
   // Check if user is logged in
   const session = await getServerSession(req, res, authOptions);
   if (!session || !session.user) {
-    return res.status(500).json("Login to upload.");
+    return res.status(500).json('Login to upload.');
   }
 
   // Rate Limiting by user email
   if (ratelimit) {
     const identifier = session.user.email;
     const result = await ratelimit.limit(identifier!);
-    res.setHeader("X-RateLimit-Limit", result.limit);
-    res.setHeader("X-RateLimit-Remaining", result.remaining);
+    res.setHeader('X-RateLimit-Limit', result.limit);
+    res.setHeader('X-RateLimit-Remaining', result.remaining);
 
     // Calcualte the remaining time until generations are reset
     const diff = Math.abs(
@@ -55,16 +55,16 @@ export default async function handler(
 
   const imageUrl = req.body.imageUrl;
   // POST request to Replicate to start the image restoration generation process
-  let startResponse = await fetch("https://api.replicate.com/v1/predictions", {
-    method: "POST",
+  let startResponse = await fetch('https://api.replicate.com/v1/predictions', {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + process.env.REPLICATE_API_KEY,
+      'Content-Type': 'application/json',
+      Authorization: 'Token ' + process.env.REPLICATE_API_KEY,
     },
     body: JSON.stringify({
       version:
-        "9283608cc6b7be6b65a8e44983db012355fde4132009bf99d976b2f0896856a3",
-      input: { img: imageUrl, version: "v1.4", scale: 2 },
+        '9283608cc6b7be6b65a8e44983db012355fde4132009bf99d976b2f0896856a3',
+      input: { img: imageUrl, version: 'v1.4', scale: 2 },
     }),
   });
 
@@ -75,19 +75,19 @@ export default async function handler(
   let restoredImage: string | null = null;
   while (!restoredImage) {
     // Loop in 1s intervals until the alt text is ready
-    console.log("polling for result...");
+    console.log('polling for result...');
     let finalResponse = await fetch(endpointUrl, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: "Token " + process.env.REPLICATE_API_KEY,
+        'Content-Type': 'application/json',
+        Authorization: 'Token ' + process.env.REPLICATE_API_KEY,
       },
     });
     let jsonFinalResponse = await finalResponse.json();
 
-    if (jsonFinalResponse.status === "succeeded") {
+    if (jsonFinalResponse.status === 'succeeded') {
       restoredImage = jsonFinalResponse.output;
-    } else if (jsonFinalResponse.status === "failed") {
+    } else if (jsonFinalResponse.status === 'failed') {
       break;
     } else {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -95,5 +95,5 @@ export default async function handler(
   }
   res
     .status(200)
-    .json(restoredImage ? restoredImage : "Failed to restore image");
+    .json(restoredImage ? restoredImage : 'Failed to restore image');
 }

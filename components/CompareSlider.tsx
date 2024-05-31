@@ -1,7 +1,7 @@
 import {
   ReactCompareSlider,
   ReactCompareSliderImage,
-} from "react-compare-slider";
+} from 'react-compare-slider';
 
 export const CompareSlider = ({
   original,
@@ -12,10 +12,10 @@ export const CompareSlider = ({
 }) => {
   return (
     <ReactCompareSlider
-      itemOne={<ReactCompareSliderImage src={original} alt="original photo" />}
-      itemTwo={<ReactCompareSliderImage src={restored} alt="restored photo" />}
+      itemOne={<ReactCompareSliderImage src={original} alt='original photo' />}
+      itemTwo={<ReactCompareSliderImage src={restored} alt='restored photo' />}
       portrait
-      className="flex w-[475px] mt-5"
+      className='flex w-[475px] mt-5'
     />
   );
 };

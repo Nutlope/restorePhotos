@@ -83,8 +83,8 @@ const Home: NextPage = () => {
           generatePhoto(imageUrl);
         }
       }}
-      width="670px"
-      height="250px"
+      width='670px'
+      height='250px'
     />
   );
 
@@ -111,52 +111,52 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
+    <div className='flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen'>
       <Head>
         <title>Restore Photos</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
 
       <Header photo={session?.user?.image || undefined} />
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8">
+      <main className='flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8'>
         <a
-          className="border shadow-xl flex max-w-md rounded-xl mb-6 hover:scale-[1.02] transition duration-300 ease-in-out"
-          href="https://www.roomgpt.io/"
-          target="_blank"
+          className='border shadow-xl flex max-w-md rounded-xl mb-6 hover:scale-[1.02] transition duration-300 ease-in-out'
+          href='https://www.roomgpt.io/'
+          target='_blank'
           onClick={() => va.track('RoomGPT link clicked')}
         >
           <img
-            src="/roomgpt-ad.png"
-            alt="roomgpt ad"
-            className="w-48 rounded-lg"
+            src='/roomgpt-ad.png'
+            alt='roomgpt ad'
+            className='w-48 rounded-lg'
           />
-          <div className="flex gap-3 flex-col py-3 sm:pr-4 pr-2">
-            <h3 className="text-left sm:text-md text-sm text-gray-700">
+          <div className='flex gap-3 flex-col py-3 sm:pr-4 pr-2'>
+            <h3 className='text-left sm:text-md text-sm text-gray-700'>
               Revolutionize your space with the world's first AI interior
               designer, 100% free to try.{' '}
             </h3>
-            <p className="text-left sm:text-sm text-xs text-gray-500 opacity-50 font-medium">
+            <p className='text-left sm:text-sm text-xs text-gray-500 opacity-50 font-medium'>
               ROOMGPT.IO
             </p>
           </div>
         </a>
-        <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl mb-5">
+        <h1 className='mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl mb-5'>
           Restore any face photo
         </h1>
         {status === 'authenticated' && data && (
-          <p className="text-slate-500">
+          <p className='text-slate-500'>
             You have{' '}
-            <span className="font-semibold">
+            <span className='font-semibold'>
               {data.remainingGenerations} generations
             </span>{' '}
             left today. Your generation
             {Number(data.remainingGenerations) > 1 ? 's' : ''} will renew in{' '}
-            <span className="font-semibold">
+            <span className='font-semibold'>
               {data.hours} hours and {data.minutes} minutes.
             </span>
           </p>
         )}
-        <div className="flex justify-between items-center w-full flex-col mt-4">
+        <div className='flex justify-between items-center w-full flex-col mt-4'>
           <Toggle
             className={`${restoredLoaded ? 'visible mb-6' : 'invisible'}`}
             sideBySide={sideBySide}
@@ -169,34 +169,34 @@ const Home: NextPage = () => {
             />
           )}
           {status === 'loading' ? (
-            <div className="max-w-[670px] h-[250px] flex justify-center items-center">
+            <div className='max-w-[670px] h-[250px] flex justify-center items-center'>
               <Rings
-                height="100"
-                width="100"
-                color="black"
-                radius="6"
+                height='100'
+                width='100'
+                color='black'
+                radius='6'
                 wrapperStyle={{}}
-                wrapperClass=""
+                wrapperClass=''
                 visible={true}
-                ariaLabel="rings-loading"
+                ariaLabel='rings-loading'
               />
             </div>
           ) : status === 'authenticated' && !originalPhoto ? (
             <UploadDropZone />
           ) : (
             !originalPhoto && (
-              <div className="h-[250px] flex flex-col items-center space-y-6 max-w-[670px] -mt-8">
-                <div className="max-w-xl text-gray-600">
+              <div className='h-[250px] flex flex-col items-center space-y-6 max-w-[670px] -mt-8'>
+                <div className='max-w-xl text-gray-600'>
                   Sign in below with Google to create a free account and restore
                   your photos today. You will be able to restore 5 photos per
                   day for free.
                 </div>
                 <button
                   onClick={() => signIn('google')}
-                  className="bg-gray-200 text-black font-semibold py-3 px-6 rounded-2xl flex items-center space-x-2"
+                  className='bg-gray-200 text-black font-semibold py-3 px-6 rounded-2xl flex items-center space-x-2'
                 >
                   <Image
-                    src="/google.png"
+                    src='/google.png'
                     width={20}
                     height={20}
                     alt="google's logo"
@@ -208,32 +208,32 @@ const Home: NextPage = () => {
           )}
           {originalPhoto && !restoredImage && (
             <Image
-              alt="original photo"
+              alt='original photo'
               src={originalPhoto}
-              className="rounded-2xl"
+              className='rounded-2xl'
               width={475}
               height={475}
             />
           )}
           {restoredImage && originalPhoto && !sideBySide && (
-            <div className="flex sm:space-x-4 sm:flex-row flex-col">
+            <div className='flex sm:space-x-4 sm:flex-row flex-col'>
               <div>
-                <h2 className="mb-1 font-medium text-lg">Original Photo</h2>
+                <h2 className='mb-1 font-medium text-lg'>Original Photo</h2>
                 <Image
-                  alt="original photo"
+                  alt='original photo'
                   src={originalPhoto}
-                  className="rounded-2xl relative"
+                  className='rounded-2xl relative'
                   width={475}
                   height={475}
                 />
               </div>
-              <div className="sm:mt-0 mt-8">
-                <h2 className="mb-1 font-medium text-lg">Restored Photo</h2>
-                <a href={restoredImage} target="_blank" rel="noreferrer">
+              <div className='sm:mt-0 mt-8'>
+                <h2 className='mb-1 font-medium text-lg'>Restored Photo</h2>
+                <a href={restoredImage} target='_blank' rel='noreferrer'>
                   <Image
-                    alt="restored photo"
+                    alt='restored photo'
                     src={restoredImage}
-                    className="rounded-2xl relative sm:mt-0 mt-2 cursor-zoom-in"
+                    className='rounded-2xl relative sm:mt-0 mt-2 cursor-zoom-in'
                     width={475}
                     height={475}
                     onLoadingComplete={() => setRestoredLoaded(true)}
@@ -245,27 +245,27 @@ const Home: NextPage = () => {
           {loading && (
             <button
               disabled
-              className="bg-black rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 hover:bg-black/80 w-40"
+              className='bg-black rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 hover:bg-black/80 w-40'
             >
-              <span className="pt-4">
-                <LoadingDots color="white" style="large" />
+              <span className='pt-4'>
+                <LoadingDots color='white' style='large' />
               </span>
             </button>
           )}
           {error && (
             <div
-              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mt-8 max-w-[575px]"
-              role="alert"
+              className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mt-8 max-w-[575px]'
+              role='alert'
             >
-              <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+              <div className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
                 Please try again in 24 hours
               </div>
-              <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+              <div className='border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700'>
                 {error}
               </div>
             </div>
           )}
-          <div className="flex space-x-2 justify-center">
+          <div className='flex space-x-2 justify-center'>
             {originalPhoto && !loading && (
               <button
                 onClick={() => {
@@ -274,7 +274,7 @@ const Home: NextPage = () => {
                   setRestoredLoaded(false);
                   setError(null);
                 }}
-                className="bg-black rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-black/80 transition"
+                className='bg-black rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-black/80 transition'
               >
                 Upload New Photo
               </button>
@@ -284,7 +284,7 @@ const Home: NextPage = () => {
                 onClick={() => {
                   downloadPhoto(restoredImage!, appendNewToName(photoName!));
                 }}
-                className="bg-white rounded-full text-black border font-medium px-4 py-2 mt-8 hover:bg-gray-100 transition"
+                className='bg-white rounded-full text-black border font-medium px-4 py-2 mt-8 hover:bg-gray-100 transition'
               >
                 Download Restored Photo
               </button>
