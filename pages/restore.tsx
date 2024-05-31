@@ -188,7 +188,7 @@ const Home: NextPage = () => {
               <div className='h-[250px] flex flex-col items-center space-y-6 max-w-[670px] -mt-8'>
                 <div className='max-w-xl text-gray-600'>
                   Sign in below with Google to create a free account and restore
-                  your photos today. You will be able to restore 5 photos per
+                  your photos today. You will be able to restore 2 photos per
                   day for free.
                 </div>
                 <button

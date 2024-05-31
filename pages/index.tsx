@@ -6,7 +6,6 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SquigglyLines from '../components/SquigglyLines';
 import { Testimonials } from '../components/Testimonials';
-import va from '@vercel/analytics';
 
 const Home: NextPage = () => {
   return (
@@ -45,9 +44,7 @@ const Home: NextPage = () => {
             target='_blank'
             rel='noreferrer'
           >
-            <button onClick={() => va.track('RoomGPT link clicked')}>
-              Check out roomGPT
-            </button>
+            Check out roomGPT
           </a>
 
           <Link
