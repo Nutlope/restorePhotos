@@ -1,7 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import redis from "../../utils/redis";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "./auth/[...nextauth]";
+import type { NextApiRequest, NextApiResponse } from 'next';
+import redis from '../../utils/redis';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './auth/[...nextauth]';
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,7 +10,7 @@ export default async function handler(
   // Check if user is logged in
   const session = await getServerSession(req, res, authOptions);
   if (!session || !session.user) {
-    return res.status(500).json("Login to upload.");
+    return res.status(500).json('Login to upload.');
   }
 
   // Query the redis database by email to get the number of generations left
@@ -30,7 +30,7 @@ export default async function handler(
   const hours = Math.floor(diff / 1000 / 60 / 60);
   const minutes = Math.floor(diff / 1000 / 60) - hours * 60;
 
-  const remainingGenerations = 5 - Number(usedGenerations);
+  const remainingGenerations = 2 - Number(usedGenerations);
 
   return res.status(200).json({ remainingGenerations, hours, minutes });
 }
