@@ -16,7 +16,6 @@ import Toggle from '../components/Toggle';
 import appendNewToName from '../utils/appendNewToName';
 import downloadPhoto from '../utils/downloadPhoto';
 import NSFWFilter from 'nsfw-filter';
-import va from '@vercel/analytics';
 import { useSession, signIn } from 'next-auth/react';
 import useSWR from 'swr';
 import { Rings } from 'react-loader-spinner';
@@ -49,7 +48,6 @@ const Home: NextPage = () => {
       try {
         isSafe = await NSFWFilter.isSafe(file);
         console.log({ isSafe });
-        if (!isSafe) va.track('NSFW Image blocked');
       } catch (error) {
         console.error('NSFW predictor threw an error', error);
       }
@@ -123,7 +121,6 @@ const Home: NextPage = () => {
           className='border shadow-xl flex max-w-md rounded-xl mb-6 hover:scale-[1.02] transition duration-300 ease-in-out'
           href='https://www.roomgpt.io/'
           target='_blank'
-          onClick={() => va.track('RoomGPT link clicked')}
         >
           <img
             src='/roomgpt-ad.png'

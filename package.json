@@ -16,7 +16,6 @@
     "@tensorflow/tfjs": "^3.21.0",
     "@upstash/ratelimit": "^0.3.10",
     "@upstash/redis": "^1.19.1",
-    "@vercel/analytics": "^1.0.2",
     "next": "latest",
     "next-auth": "^4.20.1",
     "next-plausible": "^3.11.3",
